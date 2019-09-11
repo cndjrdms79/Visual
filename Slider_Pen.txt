@@ -1,0 +1,30 @@
+int a;
+void CSliderPenDlg::OnNMCustomdrawSlider1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	a = S.GetPos();
+	SetDlgItemInt(IDC_E1, a);
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+
+CPoint pnt;
+void CSliderPenDlg::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if (nFlags == MK_LBUTTON) {
+		CClientDC dc(this);
+		CPen pen(PS_SOLID, a, RGB(0, 255, 0));  
+		dc.SelectObject(&pen);  // SelectObject pen의 주소를 넣어줌.!!
+		dc.MoveTo(pnt);
+		dc.LineTo(point);
+
+	}
+	pnt = point; //마우스 이동시 값 입력
+
+
+
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CDialogEx::OnMouseMove(nFlags, point);
+}
